@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
 /* || RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +12,37 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* || VARIABLES */
+
+:root {
+  /* FONTS */
+  --ffPrimary: "Nunito", sans-serif;
+  --fsPrimary: min(1.5rem, 3.2vh, 4vw);
+  --fsQ: 1.25rem;
+  --fsM: 1.5rem;
+  --fsL: 2rem;
+  --fsXL: 3rem;
+
+  /* COLORS */
+  --bgColor: #475569;
+  --altBgColor: #1e293b;
+  --lightColor: #f5f5f5;
+  --darkColor: #000000;
+
+  /* SPACING */
+  --halfSpace: 0.5rem;
+  --space: 1rem;
+  --oneQuarterSpace: 1.25rem;
+  --oneHalfSpace: 1.5rem;
+  --doubleSpace: 2rem;
+
+  /* SHADOWS */
+  --boxShadow: 0 5px 5px -5px var(--darkColor);
+
+  /* BORDER */
+  --borderS: 2px solid;
 }
 
 /* || UTILITY CLASSES */
@@ -24,10 +56,10 @@ html {
 }
 
 body {
-  font: 1.5rem "Nunito", sans-serif;
+  font: var(--fsPrimary) var(--ffPrimary);
   min-height: 100vh;
-  background-color: #475569;
-  background-image: radial-gradient(whitesmoke, #475569);
+  background-color: var(--bgColor);
+  background-image: radial-gradient(var(--lightColor), var(--bgColor));
   display: flex;
   flex-direction: column;
 }
@@ -35,9 +67,10 @@ body {
 header,
 footer {
   position: sticky;
-  background-color: #1e293b;
-  color: whitesmoke;
+  background-color: var(--altBgColor);
+  color: var(--lightColor);
   text-align: center;
+  z-index: 1;
 }
 
 header {
@@ -45,23 +78,26 @@ header {
 }
 
 nav {
-  background-color: #fff;
-  padding: 0.5rem;
-  border-bottom: 2px solid #000;
+  background-color: var(--lightColor);
+  padding: var(--halfSpace);
+  border-bottom: var(--borderS) var(--darkColor);
   font-weight: bolder;
   display: flex;
   justify-content: space-evenly;
+  box-shadow: var(--boxShadow);
 }
 
-nav a,
-nav a:visited {
-  font-size: 1rem;
-  color: #000;
+nav a:any-link {
+  /* font-size: var(--fsPrimary); */
+  color: var(--darkColor);
 }
 
-nav a:hover,
-nav a:focus {
+nav :is(a:hover, a:focus) {
   color: hsla(0, 0%, 20%, 0.6);
+}
+
+nav a:active {
+  color: red;
 }
 
 main {
@@ -69,8 +105,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem;
+  gap: var(--oneHalfSpace);
+  padding: var(--space);
 }
 
 footer {
@@ -83,12 +119,16 @@ footer {
   scroll-margin-top: 7.6rem;
   width: min(100%, 350px);
   background-color: #cbd5e1;
-  border: 2px solid #000;
+  border: var(--borderS) var(--darkColor);
   border-radius: 15px;
-  padding: 1rem;
+  padding: var(--space);
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.card:target {
+  border: var(--borderS) rebeccapurple;
 }
 
 .card figure {
@@ -103,9 +143,38 @@ footer {
 
 .card figure figcaption {
   font-weight: bolder;
-  font-size: 1.5rem;
-  margin: 1rem;
+  font-size: var(--fsM);
+  margin: var(--space);
   text-align: center;
+}
+
+.card figure figcaption::after {
+  content: "✨";
+  display: block;
+}
+
+.card figure figcaption::first-letter {
+  font-size: var(--fsL);
+}
+
+.card p {
+  position: relative;
+}
+
+.card p::before {
+  content: open-quote;
+  font-size: 3em;
+  position: absolute;
+  top: -0.25em;
+  left: -0.5em;
+}
+
+.card p::after {
+  content: close-quote;
+  font-size: 3em;
+  position: absolute;
+  top: -0.25em;
+  right: -0.5em;
 }
 
 /* || SMALL */
@@ -113,11 +182,7 @@ footer {
   main {
     justify-content: center;
     flex-flow: row wrap;
-    padding: 1rem;
-  }
-
-  nav a {
-    font-size: 1.5rem;
+    padding: var(--space);
   }
 
   .card {
@@ -144,7 +209,7 @@ footer {
   }
 
   .card p {
-    margin-top: 1rem;
+    margin-top: var(--space);
   }
 }
 
@@ -169,7 +234,7 @@ footer {
 /* || MOBILE DEVICE LANDSCAPE  */
 @media screen and (max-height: 425px) and (min-aspect-ratio: 7/4) {
   h2 {
-    font-size: 1.5rem;
+    font-size: var(--fsM);
   }
 
   nav {
@@ -188,10 +253,18 @@ footer {
 
   .card figure figcaption,
   .card p {
-    font-size: 1.25rem;
+    font-size: var(--fsQ);
   }
 
   .card figure figcaption {
-    font-size: 1rem;
+    font-size: var(--fsPrimary);
+  }
+}
+
+/* || DARK MODE  */
+@media (prefers-color-scheme: dark) {
+  body {
+    --bgColor: #000;
+    --altBgColor: #333;
   }
 }
